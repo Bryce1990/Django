@@ -7,7 +7,9 @@ REPO_URL = 'https://github.com/Bryce1990/Django.git'
 def deploy():
     site_folder = f'/home/{env.user}/sites/{env.host}'
     run(f'mkdir -p {site_folder}')
+    print("prior to loop")
     with cd(site_folder):
+        print("in the loop")
         _get_latest_source()
         _update_virtualenv()
         _create_or_update_dotenv()
@@ -18,7 +20,7 @@ def _get_latest_source():
     if exists('.git'):
         run('git fetch')
     else:
-        run(f'git clone {REPO_URL .}')
+        run(f'git clone {REPO_URL} .')
     current_commit = local("git log -n 1 --format=%H", capture=True)
     run(f'git reset --hard {current_commit}')
 
